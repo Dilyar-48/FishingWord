@@ -1,0 +1,82 @@
+a {
+  text-decoration: none;
+}
+
+.nav nav {
+    background:  #6495ED;
+    border: 1px;
+    border-radius: 8px;
+    width: 100%;
+    font-weight: bold;
+}
+
+.nav .nav-item {
+    position: relative;
+    display: inline-block;
+    height: 45px;
+    padding-top: 10px;
+    margin: 0px 25px 25px;
+    background: transparent;
+    transition: 0.3s ease-in-out;
+    text-transform: uppercase;
+    z-index: 2;
+}
+
+
+.nav .nav-link {
+    text-align: center;
+    position: relative;
+    color: white;
+    transition: 0.3s ease-in-out;
+    z-index: 2;
+
+}
+
+
+.nav .nav-link::before,
+.nav .nav-link::after {
+    position: absolute;
+    left: 0px;
+    top: 3px;
+    transform: translateY(40px);
+    width: 100%;
+    font-size: 0.5em;
+    transition: 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.nav .nav-link::before{
+    content: "";
+    height: 2px;
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, purple);
+    background-size: 200% 100%;
+    animation: animate-gradient 5s infinite linear;
+}
+
+.nav .nav-link::after{
+    content: attr(data-text);
+    transition-delay: 0s;
+    font-size: 11px;
+    position: absolute;
+    left: 0px;
+    top: 4px;
+}
+
+@keyframes animate-gradient{
+    0% {
+        background-position: 100% 0%;
+    }
+    50% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 0%;
+    }
+}
+
+.nav .nav-item:hover .nav-link::before,
+.nav .nav-item:hover .nav-link::after {
+    opacity: 1;
+    transform: translateY(32px);
+    transition: 0.3s ease-in-out;
+}
