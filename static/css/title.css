@@ -1,11 +1,15 @@
 a {
   text-decoration: none;
 }
+.img-icon {
+    mix-blend-mode: darken;
+    width: 3%;
+    height: 3%;
+}
 
 .nav nav {
-    background:  #6495ED;
+    background:  #256D7B;
     border: 1px;
-    border-radius: 8px;
     width: 100%;
     font-weight: bold;
 }
@@ -48,7 +52,7 @@ a {
 .nav .nav-link::before{
     content: "";
     height: 2px;
-    background: linear-gradient(90deg, red, orange, yellow, green, blue, purple);
+    background: linear-gradient(90deg, red, orange, yellow, #A7FC00, green, blue, purple, #DF73FF);
     background-size: 200% 100%;
     animation: animate-gradient 5s infinite linear;
 }
@@ -79,4 +83,17 @@ a {
     opacity: 1;
     transform: translateY(32px);
     transition: 0.3s ease-in-out;
+}
+
+.center-flex {
+    display: flex;
+    justify-content: center;
+    vertical-align: top;
+    height: 30vw;
+}
+
+.text_title {
+    transform: translateY(20%);
+    font-size: 60px;
+    font-weight: bold;
 }
