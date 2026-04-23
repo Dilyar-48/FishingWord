@@ -1,11 +1,20 @@
 a {
   text-decoration: none;
 }
+.img-icon {
+    mix-blend-mode: darken;
+    width: 3%;
+    height: 3%;
+}
 
+body {
+    background-color: #5DB0C1;
+}
+
+/*----------------------Для панели навигации-------------------------*/
 .nav nav {
-    background:  #6495ED;
+    background:  #256D7B;
     border: 1px;
-    border-radius: 8px;
     width: 100%;
     font-weight: bold;
 }
@@ -48,7 +57,7 @@ a {
 .nav .nav-link::before{
     content: "";
     height: 2px;
-    background: linear-gradient(90deg, red, orange, yellow, green, blue, purple);
+    background: linear-gradient(90deg, red, orange, yellow, #A7FC00, green, blue, purple, #DF73FF);
     background-size: 200% 100%;
     animation: animate-gradient 5s infinite linear;
 }
@@ -79,4 +88,51 @@ a {
     opacity: 1;
     transform: translateY(32px);
     transition: 0.3s ease-in-out;
+}
+/*----------------------Для header-------------------------*/
+.center-flex {
+    height: 35vw;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+.text_title {
+    font-size: 60px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.l5 {
+    position: relative;
+    margin-left: 5%;
+}
+.l10 {
+    position: relative;
+    left: 10%;
+}
+.r5 {
+    position: relative;
+    right: 5%;
+}
+.r10 {
+    position: relative;
+    right: 10%;
+}
+/*----------------------Для плавного появления текста-------------------------*/
+.slide-left {
+  animation: slideFromLeft 0.55s linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 100%;
+}
+
+@keyframes slideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px) translateY(9vw);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0)  translateY(9vw);
+  }
 }
