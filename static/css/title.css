@@ -11,6 +11,9 @@ body {
     background-color: #5DB0C1;
 }
 
+.border {
+    border: 5px solid pink;
+}
 /*----------------------Для панели навигации-------------------------*/
 .nav nav {
     background:  #256D7B;
@@ -91,10 +94,9 @@ body {
 }
 /*----------------------Для header-------------------------*/
 .center-flex {
-    height: 35vw;
-    position: absolute;
     width: 100%;
     text-align: center;
+    position: relative;
 }
 
 .text_title {
@@ -109,15 +111,15 @@ body {
 }
 .l10 {
     position: relative;
-    left: 10%;
+    margin-left: 10%;
 }
 .r5 {
     position: relative;
-    right: 5%;
+    margin-right: 5%;
 }
 .r10 {
     position: relative;
-    right: 10%;
+    margin-right: 10%;
 }
 /*----------------------Для плавного появления текста-------------------------*/
 .slide-left {
@@ -129,10 +131,32 @@ body {
 @keyframes slideFromLeft {
   from {
     opacity: 0;
-    transform: translateX(-100px) translateY(9vw);
+    transform: translateX(-100px) translateY(5vw);
   }
   to {
     opacity: 1;
-    transform: translateX(0)  translateY(9vw);
+    transform: translateX(0) translateY(7vw);
   }
+}
+
+/*-------------------Выравнивание блоков на главной странице-------------------*/
+.container {
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(5, 1fr) ;
+}
+
+.A {
+    grid-area: 1 / 1 / 4 / 4;
+}
+
+.B {
+    grid-column-start: 4;
+    grid-column-end: 6;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.C {
+    grid-column: 4 / 5;
+    grid-row: 3 / 4;
 }
