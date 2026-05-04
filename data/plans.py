@@ -16,5 +16,3 @@ class Plan(SqlAlchemyBase, SerializerMixin):
     users_count_now = sqlalchemy.Column(sqlalchemy.Integer, default=0)
     data = sqlalchemy.Column(sqlalchemy.DateTime, nullable=True)
     time = sqlalchemy.Column(sqlalchemy.Time, nullable=True)
-
-    user = orm.relationship('User', back_populates='plans')

@@ -71,6 +71,11 @@ def register():
 
     return render_template('register.html', title='Регистрация', form=form)
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
+
 
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")
