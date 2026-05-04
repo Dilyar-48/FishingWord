@@ -24,7 +24,7 @@ def global_init(db_file):
     engine = sa.create_engine(conn_str, echo=False)
     __factory = orm.sessionmaker(bind=engine)
 
-    from . import users
+    from . import users, plans
 
     SqlAlchemyBase.metadata.create_all(engine)
 
