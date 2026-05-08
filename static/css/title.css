@@ -96,7 +96,7 @@ body {
 .center-flex {
     width: 100%;
     text-align: center;
-    position: relative;
+    position: relative;ч
 }
 
 .text_title {
@@ -159,4 +159,10 @@ body {
 .C {
     grid-column: 4 / 5;
     grid-row: 3 / 4;
+}
+
+/*-------------------Форма-------------------*/
+form {
+    width: 30%;
+    margin: 0 auto;
 }
