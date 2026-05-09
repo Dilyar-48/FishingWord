@@ -65,7 +65,7 @@ def register():
             db_sess.add(user)
             db_sess.commit()
 
-            return render_template('login.html', title='Авторизация', form=LoginForm(), message="Регистрация успешна!")
+            return redirect('/')
         except Exception as e:
             return f"Ошибка: {e}"
 
