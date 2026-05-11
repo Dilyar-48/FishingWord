@@ -1,7 +1,8 @@
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, render_template, redirect, request, session, abort
 from data import db_session
 from data.users import User
-from form import LoginForm, RegisterForm
+from data.plans import Plan
+from form import LoginForm, RegisterForm, PlanForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -71,10 +72,76 @@ def register():
 
     return render_template('register.html', title='Регистрация', form=form)
 
+
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect('/')
+
+
+@app.route('/trips')
+def trips():
+    if not session.get('user_id'):
+        return redirect('/login')
+    db_sess = db_session.create_session()
+    user_plans = db_sess.query(Plan).filter(Plan.leader_id == session['user_id']).all()
+    return render_template('trips.html', title='Мои поездки', plans=user_plans)
+
+
+@app.route('/create_plan', methods=['GET', 'POST'])
+def create_plan():
+    if not session.get('user_id'):
+        return redirect('/login')
+    form = PlanForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        plan = Plan()
+        plan.place = form.place.data
+        plan.count_people = form.count_people.data
+        plan.users_count_now = 1
+        plan.data = form.data.data
+        plan.time = form.time.data
+        plan.leader_id = session['user_id']
+        db_sess.add(plan)
+        db_sess.commit()
+        return redirect('/trips')
+    return render_template('plan.html', title='Создание поездки', form=form)
+
+
+@app.route('/edit_plan/<int:id>', methods=['GET', 'POST'])
+def edit_plan(id):
+    if not session.get('user_id'):
+        return redirect('/login')
+    form = PlanForm()
+    db_sess = db_session.create_session()
+    plan = db_sess.query(Plan).filter(Plan.id == id, Plan.leader_id == session['user_id']).first()
+    if not plan:
+        abort(404)
+    if request.method == "GET":
+        form.place.data = plan.place
+        form.count_people.data = plan.count_people
+        form.data.data = plan.data
+        form.time.data = plan.time
+    if form.validate_on_submit():
+        plan.place = form.place.data
+        plan.count_people = form.count_people.data
+        plan.data = form.data.data
+        plan.time = form.time.data
+        db_sess.commit()
+        return redirect('/trips')
+    return render_template('plan.html', title='Редактирование поездки', form=form)
+
+
+@app.route('/delete_plan/<int:id>')
+def delete_plan(id):
+    if not session.get('user_id'):
+        return redirect('/login')
+    db_sess = db_session.create_session()
+    plan = db_sess.query(Plan).filter(Plan.id == id, Plan.leader_id == session['user_id']).first()
+    if plan:
+        db_sess.delete(plan)
+        db_sess.commit()
+    return redirect('/trips')
 
 
 if __name__ == '__main__':

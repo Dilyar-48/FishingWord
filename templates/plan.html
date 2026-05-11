@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.place.label }}<br>
+        {{ form.place(class="form-control") }}<br>
+        {% for error in form.place.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.count_people.label }}<br>
+        {{ form.count_people(class="form-control") }}<br>
+        {% for error in form.count_people.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.data.label }}<br>
+        {{ form.data(class="form-control", type="date") }}<br>
+        {% for error in form.data.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.time.label }}<br>
+        {{ form.time(class="form-control", type="time") }}<br>
+        {% for error in form.time.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    {{ message }}
+</form>
+{% endblock %}

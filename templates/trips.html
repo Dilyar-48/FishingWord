@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Мои поездки</h1>
+{% if plans %}
+    {% for plan in plans %}
+        <div class="col-md6 border rounded mb-3">
+            <h2>{{ plan.place }}</h2>
+            <div>
+                Нужно человек: {{ plan.count_people }}<br>
+                Дата: {{ plan.data.strftime('%d.%m.%Y') if plan.data else 'не указана' }}<br>
+                Время: {{ plan.time.strftime('%H:%M') if plan.time else 'не указано' }}
+            </div>
+            <div>
+                <a href="/edit_plan/{{ plan.id }}" class="btn btn-warning">Изменить</a>
+                <a href="/delete_plan/{{ plan.id }}" class="btn btn-danger">Удалить</a>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <a href="/create_plan" class="btn btn-success">Создать поездку</a>
+{% endif %}
+{% endblock %}
