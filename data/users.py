@@ -17,6 +17,7 @@ class User(SqlAlchemyBase, UserMixin, SerializerMixin):
     surname = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     count_trip = sqlalchemy.Column(sqlalchemy.Integer, default=0)
     town = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    avatar = sqlalchemy.Column(sqlalchemy.String, nullable=True, default='user-1.png')
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     modified_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
 

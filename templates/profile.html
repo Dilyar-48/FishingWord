@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid mt-4" style="max-width: 1400px;">
+    <h1 class="text-center mb-4">Профиль</h1>
+
+    <div style="display: flex; gap: 30px;">
+        <div style="flex: 0 0 auto;">
+            <img src="{{ url_for('static', filename='avatars/' + user.avatar) }}"
+                 class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+        </div>
+
+        <div style="flex: 1;">
+            <form method="post" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+
+                <div class="mb-3">
+                    {{ form.name.label(class="form-label") }}
+                    {{ form.name(class="form-control", style="padding: 12px;") }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.surname.label(class="form-label") }}
+                    {{ form.surname(class="form-control", style="padding: 12px;") }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" value="{{ user.email }}" readonly
+                           style="background-color: #f5f5f5; padding: 12px;">
+                </div>
+
+                <div class="mb-3">
+                    {{ form.town.label(class="form-label") }}
+                    {{ form.town(class="form-control", style="padding: 12px;") }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.avatar.label(class="form-label") }}
+                    {{ form.avatar(class="form-control", style="padding: 10px;") }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.submit(class="btn btn-primary", style="width: 100%; padding: 12px;") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

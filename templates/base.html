@@ -31,7 +31,9 @@
             </a>
             <div style="position: absolute; right: 0;">
                 {% if session.user_id %}
-                    <span style="color: white; margin-right: 10px;">Привет, {{ session.user_name }}!</span>
+                    <a href="/profile" class="nav-item" style="color: white; text-decoration: none;">
+                        <span data-text="Профиль" class="nav-link">{{ session.user_name }} {{ session.user_surname }}</span>
+                    </a>
                     <a href="/logout" class="nav-item">
                         <span data-text="Выйти" class="nav-link">Выйти</span>
                     </a>
