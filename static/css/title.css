@@ -6,13 +6,35 @@ a {
     width: 3%;
     height: 3%;
 }
+.map-container {
+      width: 40%;
+      height: 30%;
+      box-sizing: border-box;
+      margin: 20px auto;
+      overflow: hidden;
+    }
 
 body {
     background-color: #5DB0C1;
+    min-height: 100%;
+    position: relative;
 }
 
 .border {
     border: 5px solid pink;
+}
+
+html {
+    min-height: 100%;
+    position: relative;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: MediumTurquoise;
 }
 /*----------------------Для панели навигации-------------------------*/
 .nav nav {
@@ -139,27 +161,6 @@ body {
   }
 }
 
-/*-------------------Выравнивание блоков на главной странице-------------------*/
-.container {
-    display: grid;
-    grid-template: repeat(3, 1fr) / repeat(5, 1fr) ;
-}
-
-.A {
-    grid-area: 1 / 1 / 4 / 4;
-}
-
-.B {
-    grid-column-start: 4;
-    grid-column-end: 6;
-    grid-row-start: 1;
-    grid-row-end: 3;
-}
-
-.C {
-    grid-column: 4 / 5;
-    grid-row: 3 / 4;
-}
 
 /*-------------------Форма-------------------*/
 form {

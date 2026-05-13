@@ -1,4 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="map-container shadow-lg p-2 mb-5 rounded" id="map-frame">
+  {{iframe|safe}}
+</div>
+<form action="/submit" method="post">
+    <label for="number" style="font-size: 22px;">Введите предельное расстояние от центра вашего города до водоёмов:</label>
+    <hr>
+    <input type="text" id="number" name="number">
+    <input type="submit" value="Отправить">
+</form>
 {% endblock %}

@@ -1,25 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1 class="text-center mb-4">Регистрация</h1>
-    <form action="" method="post" novalidate>
-        <div>
-            {{ form.csrf_token }}
-        </div>
-        {% for field in form if field.name != 'csrf_token' and field.name != 'submit' %}
-            <div class="mb-3">
-                {{ field.label(class="form-label") }}
-                {{ field(class="form-control") }}
-                {% for error in field.errors %}
-                    <div class="alert alert-danger mt-2">{{ error }}</div>
-                {% endfor %}
+    <div style="width: 30%; margin: 0 auto; border: 1px solid CadetBlue; border-radius: 15px; margin-top: 10px;" class="shadow-lg">
+        <h1 class="text-center mb-4">Регистрация</h1>
+        <form action="" method="post" novalidate style="width: 95%;">
+            <div>
+                {{ form.csrf_token }}
             </div>
-        {% endfor %}
-        <div class="mb-3">
-            {{ form.submit(class="btn btn-primary btn-lg w-100") }}
-        </div>
-        {% if message %}
-            <div class="alert alert-danger">{{ message }}</div>
-        {% endif %}
-    </form>
+            {% for field in form if field.name != 'csrf_token' and field.name != 'submit' %}
+                <div class="mb-3">
+                    {{ field.label(class="form-label") }}
+                    {{ field(class="form-control") }}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger mt-2">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <div class="mb-3">
+                {{ form.submit(class="btn btn-primary btn-lg w-100") }}
+            </div>
+            {% if message %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endif %}
+        </form>
+    </div>
 {% endblock %}
