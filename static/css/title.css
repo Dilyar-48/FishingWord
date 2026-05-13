@@ -6,6 +6,7 @@ a {
     width: 3%;
     height: 3%;
 }
+
 .map-container {
       width: 40%;
       height: 30%;
@@ -166,4 +167,22 @@ footer {
 form {
     width: 30%;
     margin: 0 auto;
+}
+
+/*-------------------Вода-------------*/
+@keyframes water-fill {
+  0%, 100% {
+    background-position: 0% 33%, 100% 33%, 200% 33%;
+  }
+  50% {
+    background-position: -100% 66%, 0% 66%, 100% 66%;
+  }
+  100% {
+    background-position: 0% 100%, 100% 100%, 200% 100%;
+  }
+}
+
+.water-loader {
+  animation: water-fill 2s infinite linear;
+  background: radial-gradient(var(--r1) var(--r2) at top, #fff, #000);
 }

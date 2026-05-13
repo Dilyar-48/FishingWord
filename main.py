@@ -24,7 +24,7 @@ def index():
     return render_template('index.html', title='Главная страница')
 
 
-@app.route('/map/<int:dist>')
+@app.route('/map/<dist>')
 def map(dist):
     if not session.get('user_id'):
         return redirect('/login')
@@ -36,32 +36,37 @@ def map(dist):
     folium.Marker(location=[location.latitude, location.longitude], popup=user.town,
                   icon=folium.Icon(color='red')).add_to(map)
     loc = (location.latitude, location.longitude)
-    responce = requests.get(
-        f"http://api.geonames.org/findNearbyJSON?lat={location.latitude}&lng={location.longitude}&lang=ru&radius={dist}&featureClass=H&maxRows=30&username=dilly38")
-    for water in responce.json()["geonames"]:
-        name = ""
-        color = ""
-        line_coordinates = [[location.latitude, location.longitude]]
-        if "река" in water["fcodeName"].lower():
-            name = f"р.{water['name']}"
-            color = "blue"
-        elif "озеро" in water["fcodeName"].lower():
-            name = water['name']
-            color = "green"
-        elif  "пруд" in water["fcodeName"].lower():
-            name = f"п.{water['name']}"
-            color = "green"
-        if name != "":
-            location2 = (float(water["lat"]), float(water["lng"]))
-            line_coordinates.append([float(water["lat"]), float(water["lng"])])
-            km = round(distance(loc, location2).km, 2)
-            folium.CircleMarker(location=[float(water["lat"]), float(water["lng"])], popup=f"{name}\nРасстояние по прямой: {km} км\n{location2[0]}, {location2[1]}",
-                                fill_color=color, color="white", fill_opacity=0.9).add_to(map)
-            line = folium.PolyLine(locations=line_coordinates, color=random.choice(["pink", "yellow", "orange"]), weight=5, opacity=0.8)
-            line.add_to(map)
     map.get_root().render()
     iframe = map._repr_html_()
-    return render_template('map.html', title='Карта', iframe=iframe)
+    responce = requests.get(
+        f"http://api.geonames.org/findNearbyJSON?lat={location.latitude}&lng={location.longitude}&lang=ru&radius={dist}&featureClass=H&maxRows=30&username=dilly38")
+    try:
+        for water in responce.json()["geonames"]:
+            name = ""
+            color = ""
+            line_coordinates = [[location.latitude, location.longitude]]
+            if "река" in water["fcodeName"].lower():
+                name = f"р.{water['name']}"
+                color = "blue"
+            elif "озеро" in water["fcodeName"].lower():
+                name = water['name']
+                color = "green"
+            elif  "пруд" in water["fcodeName"].lower():
+                name = f"п.{water['name']}"
+                color = "green"
+            if name != "":
+                location2 = (float(water["lat"]), float(water["lng"]))
+                line_coordinates.append([float(water["lat"]), float(water["lng"])])
+                km = round(distance(loc, location2).km, 2)
+                folium.CircleMarker(location=[float(water["lat"]), float(water["lng"])], popup=f"{name}\nРасстояние по прямой: {km} км\n{location2[0]}, {location2[1]}",
+                                    fill_color=color, color="white", fill_opacity=0.9).add_to(map)
+                line = folium.PolyLine(locations=line_coordinates, color=random.choice(["pink", "yellow", "orange"]), weight=5, opacity=0.8)
+                line.add_to(map)
+        map.get_root().render()
+        iframe = map._repr_html_()
+        return render_template('map.html', title='Карта', iframe=iframe)
+    except Exception:
+        return render_template('map.html', title='Карта', iframe=iframe)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -127,6 +132,8 @@ def logout():
 @app.route('/submit', methods=['POST'])
 def submit():
     form_value = request.form.get('number')
+    if form_value == "":
+        return redirect(f'/map/20')
     return redirect(f'/map/{form_value}')
 
 

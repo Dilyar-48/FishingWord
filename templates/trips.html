@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Мои поездки</h1>
+<h1 style="text-align: center;">Мои поездки</h1>
+<hr>
+<a href="/create_plan" class="btn btn-success" style="width: 60%; margin: 0 auto;">Создать поездку</a>
 {% if plans %}
     {% for plan in plans %}
-        <div class="col-md6 border rounded mb-3">
+        <div class="water-loader rounded border border-primary border-2 p-1" style="width: 60%; margin: 0 auto;">
             <h2>{{ plan.place }}</h2>
             <div>
                 Нужно человек: {{ plan.count_people }}<br>
@@ -17,7 +19,5 @@
             </div>
         </div>
     {% endfor %}
-{% else %}
-    <a href="/create_plan" class="btn btn-success">Создать поездку</a>
 {% endif %}
 {% endblock %}
