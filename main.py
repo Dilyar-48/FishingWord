@@ -1,7 +1,7 @@
 import random
 
 from flask import Flask, render_template, redirect, request, session, abort, jsonify
-from data import db_session
+from data import db_session, trips_api
 from data.users import User
 from data.plans import Plan
 from form import LoginForm, RegisterForm, PlanForm, ProfileForm
@@ -10,6 +10,7 @@ from geopy.distance import distance
 import folium
 from geopy.geocoders import Nominatim
 import requests
+from requests import get, post
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -23,10 +24,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def index():
     return render_template('index.html', title='Главная страница')
 
+
 @app.route('/help')
 def help():
     return render_template('help.html', title='Помощь')
-
 
 
 @app.route('/map/<dist>')
@@ -67,8 +68,8 @@ def map(dist):
                 line_coordinates.append([float(water["lat"]), float(water["lng"])])
                 km = round(distance(loc, location2).km, 2)
                 marker = folium.CircleMarker(location=[float(water["lat"]), float(water["lng"])],
-                                    popup=f"{name}\nРасстояние по прямой: {km} км\n{location2[0]}, {location2[1]}",
-                                    fill_color=color, color="white", fill_opacity=0.9)
+                                             popup=f"{name}\nРасстояние по прямой: {km} км\n{location2[0]}, {location2[1]}",
+                                             fill_color=color, color="white", fill_opacity=0.9)
                 marker.add_to(map)
 
                 line = folium.PolyLine(locations=line_coordinates, color=random.choice(["pink", "yellow", "orange"]),
@@ -80,6 +81,7 @@ def map(dist):
         return render_template('map.html', title='Карта', iframe=iframe)
     except Exception:
         return render_template('map.html', title='Карта', iframe=iframe)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -156,8 +158,8 @@ def trips():
     if not session.get('user_id'):
         return redirect('/login')
     db_sess = db_session.create_session()
-    user_plans = db_sess.query(Plan).filter(Plan.leader_id == session['user_id']).all()
-    return render_template('trips.html', title='Мои поездки', plans=user_plans)
+    user_plans = get('http://localhost:8080/api/trips').json()["trips"]
+    return render_template('trips.html', title='Мои поездки', plans=user_plans, user=session.get('user_id'))
 
 
 @app.route('/create_plan', methods=['GET', 'POST'])
@@ -176,6 +178,7 @@ def create_plan():
         plan.leader_id = session['user_id']
         db_sess.add(plan)
         db_sess.commit()
+        post('http://localhost:8080/api/trips', json={'place': form.place.data, 'count_people': form.count_people.data, 'data': str(form.data.data), 'time': str(form.time.data), 'leader_id': session['user_id']})
         return redirect('/trips')
     return render_template('plan.html', title='Создание поездки', form=form)
 
@@ -250,4 +253,5 @@ def profile():
 
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")
+    app.register_blueprint(trips_api.blueprint)
     app.run(port=8080, host='127.0.0.1', debug=True)

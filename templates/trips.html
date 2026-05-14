@@ -7,16 +7,18 @@
 {% if plans %}
     {% for plan in plans %}
         <div class="water-loader rounded border border-primary border-2 p-1" style="width: 60%; margin: 0 auto;">
-            <h2>{{ plan.place }}</h2>
+            <h2>{{ plan["place"] }}</h2>
             <div>
-                Нужно человек: {{ plan.count_people }}<br>
-                Дата: {{ plan.data.strftime('%d.%m.%Y') if plan.data else 'не указана' }}<br>
-                Время: {{ plan.time.strftime('%H:%M') if plan.time else 'не указано' }}
+                Нужно человек: {{ plan["count_people"] }}<br>
+                Дата: {{ plan["data"][:10] if plan["data"] else 'не указана' }}<br>
+                Время: {{ plan["time"] if plan["time"] else 'не указано' }}
             </div>
-            <div>
-                <a href="/edit_plan/{{ plan.id }}" class="btn btn-warning">Изменить</a>
-                <a href="/delete_plan/{{ plan.id }}" class="btn btn-danger">Удалить</a>
-            </div>
+            {% if user == plan["leader_id"] %}
+                <div>
+                    <a href="/edit_plan/{{ plan.id }}" class="btn btn-warning">Изменить</a>
+                    <a href="/delete_plan/{{ plan.id }}" class="btn btn-danger">Удалить</a>
+                </div>
+            {% endif %}
         </div>
     {% endfor %}
 {% endif %}
