@@ -10,7 +10,7 @@ from geopy.distance import distance
 import folium
 from geopy.geocoders import Nominatim
 import requests
-from requests import get, post
+from requests import get, post, delete
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -157,7 +157,6 @@ def submit():
 def trips():
     if not session.get('user_id'):
         return redirect('/login')
-    db_sess = db_session.create_session()
     user_plans = get('http://localhost:8080/api/trips').json()["trips"]
     return render_template('trips.html', title='Мои поездки', plans=user_plans, user=session.get('user_id'))
 
@@ -168,17 +167,7 @@ def create_plan():
         return redirect('/login')
     form = PlanForm()
     if form.validate_on_submit():
-        db_sess = db_session.create_session()
-        plan = Plan()
-        plan.place = form.place.data
-        plan.count_people = form.count_people.data
-        plan.users_count_now = 1
-        plan.data = form.data.data
-        plan.time = form.time.data
-        plan.leader_id = session['user_id']
-        db_sess.add(plan)
-        db_sess.commit()
-        post('http://localhost:8080/api/trips', json={'place': form.place.data, 'count_people': form.count_people.data, 'data': str(form.data.data), 'time': str(form.time.data), 'leader_id': session['user_id']})
+        post('http://localhost:8080/api/trips', json={'place': form.place.data, 'count_people': form.count_people.data, 'data': form.data.data.strftime("%d-%m-%Y"), 'time': form.time.data.strftime("%H-%M"), 'leader_id': session['user_id']})
         return redirect('/trips')
     return render_template('plan.html', title='Создание поездки', form=form)
 
@@ -211,11 +200,7 @@ def edit_plan(id):
 def delete_plan(id):
     if not session.get('user_id'):
         return redirect('/login')
-    db_sess = db_session.create_session()
-    plan = db_sess.query(Plan).filter(Plan.id == id, Plan.leader_id == session['user_id']).first()
-    if plan:
-        db_sess.delete(plan)
-        db_sess.commit()
+    delete(f'http://localhost:8080/api/trips/{id}').json()
     return redirect('/trips')
 
 
