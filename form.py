@@ -1,18 +1,18 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, EmailField, IntegerField, DateField, TimeField
-from wtforms.validators import DataRequired, Length, EqualTo
+from wtforms.validators import DataRequired, Length, EqualTo, Email
 
 
 class LoginForm(FlaskForm):
-    email = EmailField('Login(email)', validators=[DataRequired()])
+    email = EmailField('Login(email)', validators=[DataRequired(), Email()])
     password = PasswordField('Пароль', validators=[DataRequired()])
     remember_me = BooleanField('Запомнить меня')
     submit = SubmitField('Войти')
 
 
 class RegisterForm(FlaskForm):
-    email = EmailField('Login(email)', validators=[DataRequired()])
+    email = EmailField('Login(email)', validators=[DataRequired(), Email()])
     name = StringField('Имя', validators=[DataRequired(), Length(min=2, max=50, message="Имя должно быть от 2 до 50 символов")])
     surname = StringField('Фамилия', validators=[DataRequired(), Length(min=2, max=50, message="Фамилия должна быть от 2 до 50 символов")])
     town = StringField('Город', validators=[DataRequired()])

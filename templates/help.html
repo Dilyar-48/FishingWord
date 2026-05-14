@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 style="text-align: center;">Частые вопросы:</h1>
+<hr>
+<div class="accordion accordion-flush" id="accordionFlushExample" style="opacity: 0.6; margin: 0 auto; width: 50%;">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+        Как работает карта?
+      </button>
+    </h2>
+    <div id="flush-collapseOne" class="accordion-collapse collapse">
+      <div class="accordion-body">Карта автоматически настраивается на ваш город, указанный в профиле. Если это невозможно - автоматически выставляется Москва. Изначально показываются до 50 мест, которые вы можете посетить в радиусе 20 км от города (по прямой). Введите новую дистанцию и нажмите кнопку "Найти" чтобы получить новые метки на карте. Нажимайте на метки, чтобы узнать названия, расстояния, координаты водоёмов.</div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+        Как правильно планировать поезки?
+      </button>
+    </h2>
+    <div id="flush-collapseTwo" class="accordion-collapse collapse">
+      <div class="accordion-body">В меню поездок нажмите на соответствующую кнопку, введите нужные вам данные (к примеру название водоёма, который вы только что нашли на карте, дату и время, количество людей, нужных вам для поездки). Отправьте заполненную вами форму. поездка появится в том же меню, её можно удалить и изменить в любой момент.</div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+        Я ошибся при заполнении своих данных. Смогу ли я их в дальнейшем изменить?
+      </button>
+    </h2>
+    <div id="flush-collapseThree" class="accordion-collapse collapse">
+      <div class="accordion-body">Конечно! Вы в любой момент можете изменить информацию о себе в профиле.</div>
+    </div>
+  </div>
+</div>
+{% endblock %}
