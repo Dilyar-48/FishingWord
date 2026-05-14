@@ -239,4 +239,4 @@ def profile():
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")
     app.register_blueprint(trips_api.blueprint)
-    app.run(port=8080, host='127.0.0.1', debug=True)
+    app.run(port=8080, host='0.0.0.0', debug=True)
