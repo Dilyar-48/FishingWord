@@ -28,7 +28,7 @@ def get_trips():
 @blueprint.route('/api/trips', methods=['POST'])
 def create_trips():
     db_sess = db_session.create_session()
-    data = datetime.datetime.strptime(request.json['data'], "%m-%d-%Y")
+    data = datetime.datetime.strptime(request.json['data'], "%d-%m-%Y")
     time = datetime.datetime.strptime(request.json['time'], "%H-%M").time()
     trips = Plan(
         place=request.json['place'],
