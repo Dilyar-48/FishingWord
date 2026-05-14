@@ -14,11 +14,10 @@
 ##### 2) запрос изображения рыбы по её названию и наоборот.
 
 
-####Перед запуском программы введите в терминал:
-#####1)python -m venv venv
-#####2)venv\Scripts\activate
-#####3)pip install -r requirements.txt
+#### Перед запуском программы введите в терминал:
+##### 1)pip install -r requirements.txt
+##### 2)pip install email_validator
 
 #### Запустите программу с помощью команды:
-#####1) python main.py
+##### 1) python main.py
 
