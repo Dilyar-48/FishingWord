@@ -3,7 +3,7 @@
 {% block content %}
 <h1 style="text-align: center;">Мои поездки</h1>
 <hr>
-<a href="/create_plan" class="btn btn-success" style="width: 60%; margin: 0 auto;">Создать поездку</a>
+<a href="/create_plan" class="btn btn-success" style="width: 60%; margin: 0 auto; ">Создать поездку</a>
 {% if plans %}
     {% for plan in plans %}
         <div class="water-loader rounded border border-primary border-2 p-1" style="width: 60%; margin: 0 auto;">
@@ -20,4 +20,5 @@
         </div>
     {% endfor %}
 {% endif %}
+<hr>
 {% endblock %}
